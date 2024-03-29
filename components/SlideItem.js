@@ -52,5 +52,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontFamily: "Josefin_sans",
+    marginTop: 10,
   },
 });
