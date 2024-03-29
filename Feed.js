@@ -20,6 +20,7 @@ export default function Feed() {
   const [data, setData] = useState([]);
   const [dataCollections, setDataCollections] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   let [fontsLoaded] = useFonts({
     Josefin_sans: require("./assets/fonts/JosefinSans-Regular.ttf"),
     Josefin_medium: require("./assets/fonts/JosefinSans-Medium.ttf"),
@@ -31,9 +32,11 @@ export default function Feed() {
       const collections = await GetCollections();
       setData(resp);
       setDataCollections(collections);
+      
     };
 
     fetchData();
+    
   }, []);
 
   return (
@@ -73,7 +76,9 @@ export default function Feed() {
                 {dataCollections !== null
                   ? dataCollections.map((item, index) => (
                       <TouchableOpacity
-                        onPress={() => setVisible(false)}
+                        onPress={() => {
+                          setVisible(false), setSelectedItem(item);
+                        }}
                         key={index}
                       >
                         <Text style={styles.modalText}>{item.Name}</Text>
