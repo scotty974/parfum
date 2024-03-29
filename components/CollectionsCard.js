@@ -10,7 +10,7 @@ const CollectionsCard = ({ item }) => {
     Josefin_medium: require("../assets/fonts/JosefinSans-Medium.ttf"),
   });
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Collections", { name: item.Name, img: item.Image[0].url, origine : item.Origine, collection_name : item.Collection_name, desc : item.Description })}>
+    <TouchableOpacity onPress={() => navigation.navigate("Collections", { name: item.Name, img: item.Image[0].url, origine : item.Origine, collection_name : item.Collection, desc : item.Description })}>
       <View style={{ width: 170 }}>
         <Image
           source={{ uri: item.Image[0].url }}
