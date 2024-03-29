@@ -58,61 +58,69 @@ export default function Feed() {
           <Slide />
         </View>
         <View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={[styles.text, { fontSize: 24, padding: 20 }]}>
-              Collections
-            </Text>
-            <Modal animationType="slide" transparent={true} visible={visible}>
-              <View style={styles.modalContent}>
-                <Text style={[styles.modalText, { fontWeight: "bold" }]}>
-                  Trier avec la collection
-                </Text>
-                {dataCollections !== null
-                  ? dataCollections.map((item, index) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setVisible(false), setSelectedItem(item);
-                        }}
-                        key={index}
-                      >
-                        <Text style={styles.modalText}>{item.Name}</Text>
-                      </TouchableOpacity>
-                    ))
-                  : null}
-                <Button title="Fermer" onPress={() => setVisible(false)} />
-              </View>
-            </Modal>
+        <View
+  style={{
+    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  }}
+>
+  <Text style={[styles.text, { fontSize: 24, padding: 20 }]}>
+    Collections
+  </Text>
+  <Modal animationType="slide" transparent={true} visible={visible}>
+    <View style={styles.modalContent}>
+      <Text style={[styles.modalText, { fontWeight: "bold" }]}>
+        Trier avec la collection
+      </Text>
+      
+      {dataCollections !== null
+        ? dataCollections.map((item, index) => (
             <TouchableOpacity
-              style={{ marginRight: 20 }}
-              onPress={() => setVisible(true)}
+              onPress={() => {
+                setVisible(false), setSelectedItem(item);
+              }}
+              key={index}
             >
-              <Image
-                source={require("./assets/filter-512.webp")}
-                style={{ width: 24, height: 24 }}
-              />
+              <Text style={styles.modalText}>{item.Name}</Text>
             </TouchableOpacity>
-          </View>
+          ))
+        : null}
+        <TouchableOpacity onPress={() => {setVisible(false), setSelectedItem(null)}}>
+          <Text style={[styles.modalText, {color: "red"}]}>Supprimer les filtres</Text>
+        </TouchableOpacity>
+      <Button title="Fermer" onPress={() => setVisible(false)} />
+    </View>
+  </Modal>
+  <TouchableOpacity
+    style={{ marginRight: 20 }}
+    onPress={() => setVisible(true)}
+  >
+    <Image
+      source={require("./assets/filter-512.webp")}
+      style={{ width: 24, height: 24 }}
+    />
+  </TouchableOpacity>
+</View>
 
-          <View
-            style={{
-              padding: 20,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-            }}
-          >
-            {data !== null
-              ? data.map((item, index) => (
-                  <CollectionsCard item={item} key={index} />
-                ))
-              : null}
-          </View>
+<View
+  style={{
+    padding: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  }}
+>
+  {data !== null
+    ? data
+        .filter(item => !selectedItem || item.Collection === selectedItem.Name)
+        .map((item, index) => (
+            <CollectionsCard item={item} key={index} />
+        ))
+    : null}
+</View>
+
         </View>
       </ScrollView>
     </SafeAreaView>
